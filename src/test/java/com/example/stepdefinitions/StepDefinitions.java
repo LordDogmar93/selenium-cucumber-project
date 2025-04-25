@@ -10,6 +10,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.safari.SafariDriver;
 
 public class StepDefinitions {
 
@@ -24,6 +25,15 @@ public class StepDefinitions {
         driver = new OperaDriver(options);
         driver.get("https://www.google.com");
     }
+
+    @Given("I have opened the Google homepage in Safari")
+    public void i_have_opened_the_google_homepage_in_safari() {
+        // Inicializar el controlador de Safari
+        driver = new SafariDriver();
+        driver.get("https://www.google.com");
+    }
+
+
 
     @When("I search for {string}")
     public void i_search_for(String query) {

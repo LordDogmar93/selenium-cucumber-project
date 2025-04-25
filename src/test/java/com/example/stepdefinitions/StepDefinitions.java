@@ -1,5 +1,8 @@
 package com.example.stepdefinitions;
 
+import com.utils.DriverManager;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +18,33 @@ import org.openqa.selenium.safari.SafariDriver;
 public class StepDefinitions {
 
     WebDriver driver;
+
+    @Before
+    public void setUp() {
+        driver = DriverManager.getDriver();
+        driver.manage().window().maximize();
+    }
+
+    @After
+    public void tearDown() {
+        DriverManager.quitDriver();
+    }
+
+    @Given("Open the URL {string}")
+    public void open_the_url(String url) {
+        driver.get(url);
+        System.out.println("URL abierta: " + url);
+    }
+
+    @Given("Enter the browser {string}")
+    public void enter_the_browser(String browser) {
+        if (browser.equalsIgnoreCase("Chrome")) {
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+            driver = new SafariDriver();
+        } else {
+            throw new IllegalArgumentException("Navegador no soportado: " + browser);
+        }
+    }
 
     @Given("I have opened the Google homepage in Opera")
     public void i_have_opened_the_google_homepage_in_opera() {
